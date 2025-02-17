@@ -20,6 +20,7 @@ The **SW-SP Coupling Toolbox** is a MATLAB-based toolkit designed for detecting 
 
 ## Usage
 ### 1. GUI Mode (EEGLAB)
+![SW-SP Coupling Analysis GUI](images/GUI_V2.png)
 1. Load an EEG dataset (`.set` file) in **EEGLAB**.
 2. Navigate to `Tools > SW-SP Coupling Analysis`.
 3. Configure parameters such as sleep stages, event labels, time windows, and channels.
@@ -51,11 +52,6 @@ batch_SWSPcoupling;
 - Summary report: `All_subjects_summary.xlsx`.
 - Plots: `.tiff` and `.png` files visualizing SW-SP event distributions.
 - **MRI-Compatible Onset Files:** Exports event latencies for fMRI studies.
-
-## GUI Overview
-Below is a screenshot of the SW-SP Coupling Analysis GUI, demonstrating the user-friendly interface for setting parameters and running analyses efficiently.
-
-![SW-SP Coupling Analysis GUI](GUI_V2.png)
 
 ## Citation
 If you use this toolbox in your research, please cite:
