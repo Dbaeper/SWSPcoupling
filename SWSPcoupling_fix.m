@@ -57,7 +57,7 @@ function All_subjects_table = SWSPcoupling_fix(EEG, loadpath, filenames, stage_t
             
             %% Load the EEGlab dataset
             EEG = pop_loadset([loadpath, filenames{s}]);
-            
+            EEG.srate=round(EEG.srate);
             %% Find channels of interest
             ChName = {EEG.chanlocs.labels};
             nChOI  = false(size(ChName));
@@ -268,7 +268,32 @@ function All_subjects_table = SWSPcoupling_fix(EEG, loadpath, filenames, stage_t
             writetable(struct2table(complete_detect), [savepath, filesep, fname_write(1:end-4), '_coupled_spindles.xlsx']);
             coupled_spindles = complete_detect;
             save([savepath, filesep, fname_write(1:end-4), '_coupled_spindles.mat'], 'coupled_spindles');
-            
+          
+            %% Update EEG event structure with coupling information and rename event types
+            for idx = 1:length(coupled_spindles)
+                spindle_latency = coupled_spindles(idx).latency;
+                event_idx = find([EEG.event.latency] == spindle_latency, 1);
+                if ~isempty(event_idx)
+                    EEG.event(event_idx).coup = coupled_spindles(idx).coup;
+                    EEG.event(event_idx).phase_angle = coupled_spindles(idx).phase_angle;
+                    EEG.event(event_idx).lag = coupled_spindles(idx).lag;
+                    EEG.event(event_idx).sw_wind_start = coupled_spindles(idx).sw_wind_start;
+                    EEG.event(event_idx).sw_wind_end = coupled_spindles(idx).sw_wind_end;
+                    EEG.event(event_idx).sw_neg_peak = coupled_spindles(idx).sw_neg_peak;
+
+                    % Update event.type based on coupling status
+                    if coupled_spindles(idx).coup == 1
+                        EEG.event(event_idx).type = ['spindle_C_', eventName];
+                    else
+                        EEG.event(event_idx).type = ['spindle_U_', eventName];
+                    end
+                end
+            end
+
+            % Save updated EEGLAB dataset (.set file)
+            pop_saveset(EEG, 'filename', [fname_write(1:end-4), '_coupling_detect.set'], 'filepath', savepath);
+
+
             %% Populate All_subjects table with subject info
             All_subjects_table{s, 1} = fname_write(1:end-4);
             All_subjects_table{s, 2} = size(Sw_wind, 2);

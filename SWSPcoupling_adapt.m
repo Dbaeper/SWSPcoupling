@@ -48,7 +48,7 @@ for s = 1:size(filenames, 1)
         
         %% Load the EEGlab dataset
         EEG = pop_loadset([loadpath, filenames{s}]);
-        
+        EEG.srate=round(EEG.srate);
         %% Find channels of interest
         ChName = {EEG.chanlocs.labels};
         nChOI = false(size(ChName));
@@ -245,7 +245,30 @@ for s = 1:size(filenames, 1)
         writetable(struct2table(complete_detect), [savepath, filesep, fname_write(1, 1:end-4), '_coupled_spindles.xlsx']);
         coupled_spindles = complete_detect;
         save([savepath, filesep, fname_write(1, 1:end-4), '_coupled_spindles.mat'], 'coupled_spindles')
-        
+        %% Update EEG.event structure and rename spindle events based on coupling status and eventName
+        for idx = 1:length(coupled_spindles)
+            spindle_latency = coupled_spindles(idx).latency;
+            event_idx = find([EEG.event.latency] == spindle_latency, 1);
+            if ~isempty(event_idx)
+                EEG.event(event_idx).coup = coupled_spindles(idx).coup;
+                EEG.event(event_idx).phase_angle = coupled_spindles(idx).phase_angle;
+                EEG.event(event_idx).lag = coupled_spindles(idx).lag;
+                EEG.event(event_idx).sw_wind_start = coupled_spindles(idx).sw_wind_start;
+                EEG.event(event_idx).sw_wind_end = coupled_spindles(idx).sw_wind_end;
+                EEG.event(event_idx).sw_neg_peak = coupled_spindles(idx).sw_neg_peak;
+
+                % Rename event.type based on coupling status and eventName directly
+                if coupled_spindles(idx).coup == 1
+                    EEG.event(event_idx).type = ['spindle_C_', eventName];
+                else
+                    EEG.event(event_idx).type = ['spindle_U_', eventName];
+                end
+            end
+        end
+
+        % Save the updated EEGLAB dataset (.set file)
+        pop_saveset(EEG, 'filename', [fname_write(1:end-4), '_coupled.set'], 'filepath', savepath);
+
         %% Populate All_subjects table with subject info
         All_subjects_table{s, 1} = fname_write(1, 1:end-4);
         All_subjects_table{s, 2} = size(Sw_wind, 2);
@@ -299,7 +322,8 @@ for s = 1:size(filenames, 1)
         end    
         if stage_tag.onsets == 1
 
-            extract_SWSP_onsets(savepath, fname_write, coupled_spindles, coupled_SW, Uncoupled_SW);
+%             extract_SWSP_onsets(savepath, fname_write, coupled_spindles, coupled_SW, Uncoupled_SW);
+            extract_SWSP_onsets_TR(savepath, fname_write, coupled_spindles, coupled_SW, Uncoupled_SW, EEG, 1, 2.16, 1)
         end
         clearvars -except stage_tag savepath filenames s loadpath All_subjects_table All_subjects_csp All_subjects_uncsp all_rep_bins_SP all_rep_bins All_subjects_csw All_subjects_uncsw window_size nBins;
     catch
