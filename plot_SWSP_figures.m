@@ -38,7 +38,7 @@ function plot_SWSP_figures(savepath, fname_write, window_size, nBins, EEG, inter
     xx = xlim;
     line([xx(1) xx(2)], [0 0], 'LineStyle', '--');
     saveas(gcf, fullfile(savepath, [fname_write(1:end-4), '_SW-SP_coupling_window.tiff']), 'tif');
-    close;
+    % close;
     
     % --- 2. Event Correlation Histogram (Hz) ---
     xAxis = linspace(-window_size, window_size, nBins);
@@ -49,7 +49,7 @@ function plot_SWSP_figures(savepath, fname_write, window_size, nBins, EEG, inter
     xlabel('Time (sec)');
     ylabel('Hz');
     saveas(gcf, fullfile(savepath, [fname_write(1:end-4), '_Event_correlation_histogram_sw.tiff']), 'tif');
-    close;
+    % close;
 
     % --- 3. Event Correlation Histogram (Spindle Percent) ---
     figure('Visible', 'off');
@@ -59,7 +59,7 @@ function plot_SWSP_figures(savepath, fname_write, window_size, nBins, EEG, inter
     xlabel('Time (sec)');
     ylabel('Sp percent');
     saveas(gcf, fullfile(savepath, [fname_write(1:end-4), '_Event_correlation_histogram_sp.tiff']), 'tif');
-    close;
+    % close;
     
     disp(['Figures saved for ', fname_write]);
 

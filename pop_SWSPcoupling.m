@@ -144,7 +144,7 @@ EEG.etc.SWSP.results = 'Processed with SWSP Coupling';
 EEG.etc.SWSP.summary_table = All_subjects_table;
 EEG.etc.SWSP.savepath = savepath;  % Store save path inside EEG struct
 
-% Automatically open the results folder after processing
+% % Automatically open the results folder after processing
 if ispc
     system(['explorer ', strrep(savepath, '/', '\')]);
 elseif ismac
@@ -156,6 +156,6 @@ end
 % Generate EEGLAB command history
 com = sprintf('EEG = pop_SWSPcoupling(EEG);');
 
-eeglab redraw;
+% eeglab redraw;
 
 end

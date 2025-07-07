@@ -51,10 +51,7 @@ eeglab nogui % Initialize EEGlab
 
 disp('Please select file(s) to process.');
 [filenames, loadpath] = uigetfile( ...
-    {'*.mat; *.set', 'MAT-files (*.mat)'; ...
-     '*.set', 'EEGlab Dataset (*.set)'; ...
-     '*.*', 'All Files (*.*)'}, ...
-    'multiselect', 'on');
+    {'*.set', 'EEGlab Dataset (*.set)'}, 'multiselect', 'on');
 if ischar(filenames) % Only one file was selected
     filenames = cellstr(filenames); % Convert to cell array for consistency
 end
@@ -67,7 +64,7 @@ EEG = pop_loadset([loadpath, filenames{1}]);
 
 % Ensure EEG structure has necessary fields
 if ~isfield(EEG, 'event') || isempty(EEG.event)
-    warning('The EEG dataset does not contain any events. SleepStage and event selection may not work.');
+    warning('The EEG dataset does not contain any events. Sleep Stage and event selection may not work.');
 end
 
 % GUI geometry
