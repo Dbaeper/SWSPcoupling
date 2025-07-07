@@ -48,6 +48,7 @@ batch_SWSPcoupling;
 | `plot_SWSP_figures.m` | Generates visualizations of SW-SP coupling. |
 
 ## Output Files
+- `.set` EEGLAB dataset file containing detection results.
 - `.mat` and `.xlsx` files containing detection results.
 - Summary report: `All_subjects_summary.xlsx`.
 - Plots: `.tiff` and `.png` files visualizing SW-SP event distributions.
