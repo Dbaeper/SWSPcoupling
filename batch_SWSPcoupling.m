@@ -43,21 +43,38 @@
 %   - `finalize_SWSP_results.m` (summary compilation)
 %
 % Author: Daniel Baena  
-% Email: dbaenape@uottawa.ca  
+% Email: dbaenape@uottawa.ca - dbaeper@gmail.com  
 % Affiliation: University of Ottawa  
-% Date: 2025-02-06
+% -------------------------------------------------------------------------
+% This script is part of the SW-SP Coupling Toolbox
+%
+% If you use this software or its methods in your research, please cite:
+%
+% Baena, D., Ray, L.B., & Fogel, S.M. (2025).
+% A novel adaptive time‑window method for detecting slow wave–spindle coupling:
+% Comparison of temporal co‑occurrence and phase–amplitude coupling approaches.
+% Journal of Neuroscience Methods, 422, 110526.
+% https://doi.org/10.1016/j.jneumeth.2025.110526
+% -------------------------------------------------------------------------
 
 eeglab nogui % Initialize EEGlab
 
 disp('Please select file(s) to process.');
 [filenames, loadpath] = uigetfile( ...
     {'*.set', 'EEGlab Dataset (*.set)'}, 'multiselect', 'on');
+if isequal(filenames, 0)
+    disp('File selection canceled. Exiting...');
+    return;
+end
 if ischar(filenames) % Only one file was selected
     filenames = cellstr(filenames); % Convert to cell array for consistency
 end
 
-disp('Please select save folder ');
-[savepath] = uigetdir;
+timestamp = datestr(now, 'yyyy-mm-dd_HHMM'); % e.g., 2025-07-09_2315
+savepath = [loadpath 'SWSPcouplingBatch_' timestamp filesep];
+if ~isdir(savepath);mkdir(savepath);end
+
+disp(['Data will be saved at ' savepath]);
 
 % Load EEG dataset before GUI
 EEG = pop_loadset([loadpath, filenames{1}]);
@@ -138,6 +155,10 @@ uilist = { ...
 result = inputgui('geometry', geometry, 'geomvert', geomvert, 'uilist', uilist, ...
     'title', 'SW-SP Coupling analyses', 'helpcom', 'pophelp(''SWSPcoupling'')', ...
     'userdata', EEG);
+if isempty(result)
+    disp('Parameter selection canceled. Exiting...');
+    return;
+end
 
 % Process user selections
 if ~isempty(result)

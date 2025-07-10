@@ -24,9 +24,19 @@ function All_subjects_table = SWSPcoupling_adapt(EEG, loadpath, filenames, stage
 %     proportional to its duration.
 %
 % Author: Daniel Baena  
-% Email: dbaenape@uottawa.ca  
+% Email: dbaenape@uottawa.ca - dbaeper@gmail.com  
 % Affiliation: University of Ottawa  
-% Date: 2025-02-06
+% -------------------------------------------------------------------------
+% This script is part of the SW-SP Coupling Toolbox
+%
+% If you use this software or its methods in your research, please cite:
+%
+% Baena, D., Ray, L.B., & Fogel, S.M. (2025).
+% A novel adaptive time‑window method for detecting slow wave–spindle coupling:
+% Comparison of temporal co‑occurrence and phase–amplitude coupling approaches.
+% Journal of Neuroscience Methods, 422, 110526.
+% https://doi.org/10.1016/j.jneumeth.2025.110526
+% -------------------------------------------------------------------------
 
 filenames = filenames';
 All_subjects_table = {zeros(size(filenames, 1), 3)};
