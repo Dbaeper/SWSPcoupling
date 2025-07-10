@@ -66,7 +66,7 @@ If you use this toolbox in your research, please cite:
 Author: **Daniel Baena**  
 School of Psychology, University of Ottawa, Canada.
 uOttawa Sleep Research Laboratory.
-Email: dbaenape@uottawa.ca  
+Email: dbaenape@uottawa.ca - dbaeper@gmail.com 
 Affiliation: University of Ottawa  
 
 ## License
