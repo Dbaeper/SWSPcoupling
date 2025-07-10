@@ -56,7 +56,11 @@ batch_SWSPcoupling;
 
 ## Citation
 If you use this toolbox in your research, please cite:
-> Baena, D., Ray, L. B., & Fogel, S. M. (2025). A Novel Adaptive Time-Window Method for Detecting Slow Wave–Spindle Coupling: Comparison of Temporal Co-occurrence and Phase-Amplitude Coupling Approaches. Journal of Neuroscience Methods, 110526. https://doi.org/10.1016/j.jneumeth.2025.110526
+> Baena, D., Ray, L.B., & Fogel, S.M. (2025).
+> A novel adaptive time‑window method for detecting slow wave–spindle coupling:
+> Comparison of temporal co‑occurrence and phase–amplitude coupling approaches.
+> Journal of Neuroscience Methods, 422, 110526.
+> https://doi.org/10.1016/j.jneumeth.2025.110526
 
 ## Contact
 Author: **Daniel Baena**  
