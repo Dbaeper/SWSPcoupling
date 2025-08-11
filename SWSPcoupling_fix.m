@@ -169,6 +169,11 @@ function All_subjects_table = SWSPcoupling_fix(EEG, loadpath, filenames, stage_t
                         if ~isfield(Current_spindle(sps), 'peak') || isempty(Current_spindle(sps).peak)
                             Current_spindle(sps).peak = round(Current_spindle(sps).latency + (Current_spindle(sps).duration / 2));
                         end
+                        % In case spindle event latencies are referenced to the
+                        % event, put them in global EEG time
+                        if Current_spindle(sps).peak < Current_spindle(sps).latency
+                            Current_spindle(sps).peak = round(Current_spindle(sps).latency + Current_spindle(sps).peak);
+                        end
                         for win = 1:size(range_windows, 1)
                             if range_windows(win, 1) < Current_spindle(sps).peak && ...
                                     Current_spindle(sps).peak < range_windows(win, 2)
