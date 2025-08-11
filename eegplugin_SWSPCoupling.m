@@ -1,5 +1,5 @@
-function vers = eegplugin_SWSPCoupling(fig)
-% EEGPLUGIN_SWSPCOUPLING - Adds SW-SP Coupling Analysis to EEGLAB Tools menu.
+ function vers = eegplugin_SWSPCoupling(fig, trystrs, catchstrs)
+ % EEGPLUGIN_SWSPCOUPLING - Adds SW-SP Coupling Analysis to EEGLAB Tools menu.
 %
 % Usage:
 %   This function is automatically executed when EEGLAB starts,
